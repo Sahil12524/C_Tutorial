@@ -36,7 +36,7 @@ void BubbleSort(int *A, int n, int (*compare)(int, int)) // simple optimized bub
     {
         for (int j = 0; j < n - 1; j++)
         {
-            if (compare(A[j], A[j + 1]) > 0)
+            if (compare(A[j], A[j + 1]) > 0) // returns 1 if A[j] is greater than A[j + 1]. In this case the swap will take place.
             {
                 temp = A[j];
                 A[j] = A[j + 1];
