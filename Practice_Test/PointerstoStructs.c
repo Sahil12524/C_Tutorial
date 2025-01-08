@@ -42,5 +42,7 @@ int main()
     printf("Number of pages in the book: %d\n", book->pages);
 
     clearInputBuffer();
+
+    free(book);
     return 0;
 }
