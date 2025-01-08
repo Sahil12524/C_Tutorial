@@ -25,6 +25,24 @@ void clearInputBuffer()
         ;
 }
 
+void sortStudents(struct Student *stud, size_t size)
+{
+    struct Student temp;
+    // Basic bubble sort.
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size - 1; j++)
+        {
+            if (stud[j].rollNo > stud[j + 1].rollNo)
+            {
+                temp = stud[j];
+                stud[j] = stud[j + 1];
+                stud[j + 1] = temp;
+            }
+        }
+    }
+}
+
 int main()
 {
     struct Student stud[5];
@@ -44,19 +62,7 @@ int main()
         clearInputBuffer();
     }
 
-    // Basic bubble sort.
-    for (int i = 0; i < size; i++)
-    {
-        for (int j = 0; j < size - 1; j++)
-        {
-            if (stud[j].rollNo > stud[j + 1].rollNo)
-            {
-                temp = stud[j].rollNo;
-                stud[j].rollNo = stud[j + 1].rollNo;
-                stud[j + 1].rollNo = temp;
-            }
-        }
-    }
+    sortStudents(stud, size);
 
     for (int i = 0; i < size; i++)
     {
