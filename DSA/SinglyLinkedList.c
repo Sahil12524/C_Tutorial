@@ -205,7 +205,7 @@ int main()
     displayList(head);
 
     deleteByValue(&head, 20);
-    printf("Linked List after adding at the 20: ");
+    printf("Linked List after deleting value 20: ");
     displayList(head);
 
     deletedAtPosition(&head, 2);
