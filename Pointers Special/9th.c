@@ -4,7 +4,7 @@
     Difficulty: RIP 😭
 
     Very Important:
-    Please note that why using pointers use appropriate brackets
+    Please note that when using pointers use appropriate brackets
     here we can write:
     a[3] = 7 as *(a + 3) = 7
     but see:
