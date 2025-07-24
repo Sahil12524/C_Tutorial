@@ -53,76 +53,132 @@
 
 void mallocDemo(int **A, int *sizeOfArray)
 {
-    int i;
-    *A = (int *)malloc(*sizeOfArray * sizeof(int));
-    printf("\nmalloc:\n");
-    for (i = 0; i < *sizeOfArray; i++)
-    {
-        (*A)[i] = i + 1;
-    }
-    for (i = 0; i < *sizeOfArray; i++)
-    {
-        printf("%d ", (*A)[i]);
-    }
-    printf("\n");
+  int i;
+  *A = (int *)malloc(*sizeOfArray * sizeof(int));
+
+  if (*A == NULL)
+  {
+    printf("malloc failed.\n");
+    return;
+  }
+
+  printf("\nmalloc:\n");
+  for (i = 0; i < *sizeOfArray; i++)
+  {
+    (*A)[i] = i + 1;
+  }
+
+  for (i = 0; i < *sizeOfArray; i++)
+  {
+    printf("%d ", (*A)[i]);
+  }
+  printf("\n");
 }
 
 void callocDemo(int **B, int *sizeOfArray)
 {
-    int i;
-    *B = (int *)calloc(*sizeOfArray, sizeof(int));
-    printf("\ncalloc:\n");
-    for (i = 0; i < *sizeOfArray; i++)
-    {
-        (*B)[i] = i + 1;
-    }
-    for (i = 0; i < *sizeOfArray; i++)
-    {
-        printf("%d ", (*B)[i]);
-    }
-    printf("\n");
+  int i;
+  *B = (int *)calloc(*sizeOfArray, sizeof(int));
+
+  if (*B == NULL)
+  {
+    printf("calloc failed.\n");
+    return;
+  }
+
+  printf("\ncalloc (initial values):\n");
+  for (i = 0; i < *sizeOfArray; i++)
+  {
+    printf("%d ", (*B)[i]);
+  }
+  printf("\n");
+
+  printf("\ncalloc:\n");
+  for (i = 0; i < *sizeOfArray; i++)
+  {
+    (*B)[i] = i + 1;
+  }
+
+  for (i = 0; i < *sizeOfArray; i++)
+  {
+    printf("%d ", (*B)[i]);
+  }
+  printf("\n");
 }
 
 void reallocDemo(int **C, int *sizeOfArray)
 {
-    int i, newSize = *sizeOfArray / 2;
-    *C = (int *)realloc(*C, newSize * sizeof(int));
-    *sizeOfArray = newSize;
-    printf("\nArray after realloc:\n");
-    for (i = 0; i < *sizeOfArray; i++)
-    {
-        printf("%d ", (*C)[i]);
-    }
-    printf("\n");
+  int newSize = *sizeOfArray / 2;
+  if (newSize == 0)
+  {
+    printf("New size after realloc would be 0. Exiting.\n");
+    return;
+  }
+
+  int *temp = NULL;
+  temp = (int *)realloc(*C, newSize * sizeof(int));
+
+  if (temp == NULL)
+  {
+    printf("realloc failed.\n");
+    return;
+  }
+
+  *C = temp;
+  *sizeOfArray = newSize;
+
+  printf("\nArray after realloc:\n");
+  for (int i = 0; i < *sizeOfArray; i++)
+  {
+    printf("%d ", (*C)[i]);
+  }
+  printf("\n");
 }
 
 int main()
 {
-    int sizeOfArray;
-    int *A = NULL, *B = NULL, *C = NULL;
-    system("cls");
-    printf("Enter size of array: ");
-    scanf("%d", &sizeOfArray);
-    mallocDemo(&A, &sizeOfArray);
-    callocDemo(&C, &sizeOfArray);
+  int sizeOfArray;
+  int *A = NULL, *B = NULL, *C = NULL;
 
-    C = (int *)malloc(sizeOfArray * sizeof(int));
+  system("cls");
+
+  printf("Enter size of array: ");
+  if (scanf("%d", &sizeOfArray) != 1 || sizeOfArray <= 0)
+  {
+    printf("\nInvalid input or size <= 0. Exiting.\n");
+    return 1;
+  }
+
+  mallocDemo(&A, &sizeOfArray);
+  callocDemo(&B, &sizeOfArray);
+
+  C = (int *)malloc(sizeOfArray * sizeof(int));
+
+  if (C == NULL)
+  {
+    printf("malloc for C failed.\n");
+  }
+  else
+  {
     for (int i = 0; i < sizeOfArray; i++)
     {
-        C[i] = i + 1;
+      C[i] = i + 1;
     }
+
     printf("\nInitial array for realloc:\n");
     for (int i = 0; i < sizeOfArray; i++)
     {
-        printf("%d ", C[i]);
+      printf("%d ", C[i]);
     }
 
     printf("\n");
 
     reallocDemo(&C, &sizeOfArray);
+  }
 
-    free(A);
-    free(B);
-    free(C);
-    return 0;
+  free(A);
+  free(B);
+  free(C);
+
+  return 0;
 }
